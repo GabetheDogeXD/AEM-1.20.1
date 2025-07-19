@@ -12,6 +12,5 @@ public class AnotherEnchantingMod1201 implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		LOGGER.info("Hello Fabric world!");
 	}
 }
