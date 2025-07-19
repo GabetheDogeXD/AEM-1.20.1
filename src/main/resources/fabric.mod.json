@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "another-enchanting-mod-1201",
+	"version": "${version}",
+	"name": "Another Enchanting Mod 1.20.1",
+	"description": "The purpose of this mod is to change the enchanting system to my preference",
+	"authors": [
+		"GabetheDogeXD"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ame.mos.AnotherEnchantingMod1201"
+		],
+		"client": [
+			"ame.mos.AnotherEnchantingMod1201Client"
+		],
+		"fabric-datagen": [
+			"ame.mos.AnotherEnchantingMod1201DataGenerator"
+		]
+	},
+	"mixins": [
+		"another-enchanting-mod-1201.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
