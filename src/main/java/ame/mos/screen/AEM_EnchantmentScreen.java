@@ -5,9 +5,20 @@ import net.minecraft.client.gui.screen.ingame.EnchantmentScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.EnchantmentScreenHandler;
 import net.minecraft.text.Text;
+import net.minecraft.client.gui.widget.ButtonWidget;
 
 
 public class AEM_EnchantmentScreen extends EnchantmentScreen {
+
+    // "Enum" is a data type used for constants, which seems to be used here for the three screen states
+    private enum Tab {
+        ENCHANT,
+        TEXT,
+        GLINT
+    }
+
+    //Starts the enchanting table on the enchant menu
+    private Tab currentTab = Tab.ENCHANT;
 
     //Temp screen dimensions to change the table texture
     private static final int AEM_backgroundWidth = 300;
@@ -62,6 +73,49 @@ public class AEM_EnchantmentScreen extends EnchantmentScreen {
         );
     }
 
+    //override for button addition
+    @Override
+    protected void init() {
+        super.init();
+
+        int tabY = this.y + 6;
+
+        int buttonWidth = 70;
+        int buttonHeight = 20;
+        int spacing = 4;
+
+        int firstButtonX = this.x + 8;
+
+        this.addDrawableChild(
+                ButtonWidget.builder(
+                        Text.literal("Enchant"),
+                        button -> this.currentTab = Tab.ENCHANT
+                )
+                        .position(firstButtonX, tabY)
+                        .size(buttonWidth,buttonHeight)
+                        .build()
+        );
+        this.addDrawableChild(
+                ButtonWidget.builder(
+                                Text.literal("Text"),
+                                button -> this.currentTab = Tab.TEXT
+                        )
+                        .position(firstButtonX + buttonWidth + spacing, tabY)
+                        .size(buttonWidth,buttonHeight)
+                        .build()
+        );
+        this.addDrawableChild(
+                ButtonWidget.builder(
+                                Text.literal("Glint"),
+                                button -> this.currentTab = Tab.GLINT
+                        )
+                        .position(firstButtonX + (buttonWidth + spacing) * 2, tabY)
+                        .size(buttonWidth,buttonHeight)
+                        .build()
+        );
+    }
+
+    //Override for rendering in the menu
     @Override
     public void render(
             DrawContext context,
@@ -69,9 +123,8 @@ public class AEM_EnchantmentScreen extends EnchantmentScreen {
             int mouseY,
             float delta
     )
-
     {
-        //test display message that ensures that the mod is loaded
+        //Test display message that ensures that the mod is loaded
         super.render(context, mouseX, mouseY, delta);
         context.drawText(
                 this.textRenderer,
@@ -81,5 +134,23 @@ public class AEM_EnchantmentScreen extends EnchantmentScreen {
                 0x00FF00,
                 true
         );
+
+
+    //Renderer for the button tabs
+    String tabText;
+    switch (this.currentTab) {
+        case ENCHANT -> tabText = "ENCHANT TAB";
+        case TEXT -> tabText = "TEXT TAB";
+        case GLINT -> tabText = "GLINT TAB";
+        default -> tabText = "";
+    }
+    context.drawText(
+            this.textRenderer,
+            tabText,
+            this.x + 10,
+            this.y + 35,
+            0xFFFFFF,
+            true
+            );
     }
 }
